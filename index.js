@@ -1,11 +1,9 @@
-
-const PDFDocument = require('pdfkit');
 const fs = require('fs');
-
+const PDFDocument = require("pdfkit-table");
 // Create a document
 const doc = new PDFDocument();
-const nume_primire = 'Baciu Ciprian Ionut';
-const nume_predator = 'Teodora Selea';
+const nume_predator = 'Baciu Ciprian Ionut';
+const nume_primire= 'Teodora Selea';
 const numar_gestiune = '1012';
 const date = new Date();
 let day = date.getDate();
@@ -18,11 +16,20 @@ const data_incheiat_gestionare  = `Încheiat astazi ${currentDate}.`;
 const nota_1 = 'Primitorul are obligația să asigure paza și depozitarea în bune condiții a bunurilor primite în subgestiune;';
 const nota_2 = 'Primitorul are obligația să anunțe gestionarul în cazul constatării apariției defecțiunilor, sau în cazul pierderii sau furtului, în maxim 24 de ore de la constatarea incidentului;';
 const nota_3 = 'Primitorul are obligația de a pune la dispoziția proprietarului/gestinarului bunurile aflate în subgestiune la orice solicitare a acestuia învederea verificării stării tehnice sau a inventarierii.';
+
+
 // Pipe its output somewhere, like to a file or HTTP response
 // See below for browser usage
 doc.pipe(fs.createWriteStream('output.pdf'));
 
-
+const tableArray = {
+    headers: ["Predator", "Primitor"],
+    rows: [
+      [`${nume_predator}`, `${nume_primire}`, ],
+      ["   ", "   ", ],
+    ],
+  };
+ 
 
 doc.image('a.png', {
   fit: [150, 200],
@@ -36,7 +43,15 @@ doc.moveDown(0.5);
 doc.font('Times-Italic')
     .text('avand ca obiect folosinta mijloacelor fixe/obiectelor de inventar' , {  width: 410,align: 'center'});
 doc.moveDown(2);
+doc.fontSize(12);
 doc.font('Times-Roman')
-    .text(`This text is left aligned. ${data_incheiat_gestionare}`);
-
+    .text(`Astfel, predatorul ${nume_predator} , gestionar al Gestiunii ${numar_gestiune} da iar primitorului ${nume_primire} primeste , cu dreptul de folosinta , bunurile evidentiate , dupa cum urmeaza :`);
+//Adaugare tabel de gestiune ; 
+    doc.moveDown(14); 
+doc.font('Times-Roman')
+    .text(`Prezentul proces verbal s-a incheiat in doua exemplare, originale, cate unul pentru fiecare parte.`);
+    doc.moveDown(0.5);
+doc.font('Times-Roman')
+    .text(`${data_incheiat_gestionare}`);
+    doc.table(tableArray, { width: 300 , align : 'center' , valign : 'center' });
 doc.end();
