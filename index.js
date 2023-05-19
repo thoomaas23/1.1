@@ -17,8 +17,6 @@ const data_incheiat_gestionare = `Incheiat astazi ${currentDate}.`;
 const nota_1 = 'Primitorul are obligatia sa asigure paza si depozitarea in bune conditii a bunurilor primite in subgestiune;';
 const nota_2 = 'Primitorul are obligatia sa anunte gestionarul in cazul constatarii aparitiei defectiunilor, sau in cazul pierderii sau furtului, in maxim 24 de ore de la constatarea incidentului;';
 const nota_3 = 'Primitorul are obligatia de a pune la dispozitia proprietarului/gestinarului bunurile aflate in subgestiune la orice solicitare a acestuia invederea verificarii starii tehnice sau a inventarierii.';
-
-
 // Pipe its output somewhere, like to a file or HTTP response
 // See below for browser usage
 doc.pipe(fs.createWriteStream('output.pdf'));

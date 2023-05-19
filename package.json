@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "mysql": "^2.18.1",
     "pdfkit": "^0.13.0",
     "pdfkit-table": "^0.1.99",
     "table": "^6.8.1"
