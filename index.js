@@ -25,7 +25,7 @@ doc.pipe(fs.createWriteStream('output.pdf'));
 
 const tableArray = {
 
-    headers: ["Semnatura1","Semnatura2"],
+    headers: ["Semnatura1", "Semnatura2"],
     rows: [
         ["Predator", "Primitor"],
         [`${nume_predator}`, `${nume_primire}`,],
@@ -64,11 +64,11 @@ doc.font('Times-Roman')
         padding: 70,
         columnsSize: [250, 270],
         // {Function}
-        
+
         prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
 
             const { x, y, width, height } = rectCell;
-            
+
 
             if (indexColumn === 0) {
                 doc
@@ -93,7 +93,7 @@ doc.font('Times-Roman')
             doc.fontSize(10).fillColor('#292929');
 
         }, // {Function}
-        
+
     });
 doc.font('Times-Italic')
     .text('Nota : ');
