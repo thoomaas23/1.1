@@ -13,10 +13,10 @@ let year = date.getFullYear();
 let currentDate;
 if (month >= 10) { currentDate = `${day}.${month}.${year}`; }
 else { currentDate = `${day}.0${month}.${year}`; }
-const data_incheiat_gestionare = `Încheiat astazi ${currentDate}.`;
-const nota_1 = 'Primitorul are obligația să asigure paza și depozitarea în bune condiții a bunurilor primite în subgestiune;';
-const nota_2 = 'Primitorul are obligația să anunțe gestionarul în cazul constatării apariției defecțiunilor, sau în cazul pierderii sau furtului, în maxim 24 de ore de la constatarea incidentului;';
-const nota_3 = 'Primitorul are obligația de a pune la dispoziția proprietarului/gestinarului bunurile aflate în subgestiune la orice solicitare a acestuia învederea verificării stării tehnice sau a inventarierii.';
+const data_incheiat_gestionare = `incheiat astazi ${currentDate}.`;
+const nota_1 = 'Primitorul are obligatia sa asigure paza si depozitarea in bune conditii a bunurilor primite in subgestiune;';
+const nota_2 = 'Primitorul are obligatia sa anunte gestionarul in cazul constatarii aparitiei defectiunilor, sau in cazul pierderii sau furtului, in maxim 24 de ore de la constatarea incidentului;';
+const nota_3 = 'Primitorul are obligatia de a pune la dispozitia proprietarului/gestinarului bunurile aflate in subgestiune la orice solicitare a acestuia invederea verificarii starii tehnice sau a inventarierii.';
 
 
 // Pipe its output somewhere, like to a file or HTTP response
@@ -24,14 +24,14 @@ const nota_3 = 'Primitorul are obligația de a pune la dispoziția proprietarulu
 doc.pipe(fs.createWriteStream('output.pdf'));
 
 const tableArray = {
-    
-   headers: ["Predator", "Primitor"],
-    rows: [
 
+    headers: ["Predator", "Primitor"],
+    rows: [
+        ["Predator", "Primitor"],
         [`${nume_predator}`, `${nume_primire}`,],
         ["   ", "   ",],
     ],
-    
+
 };
 
 doc.image('a.png', {
@@ -41,7 +41,7 @@ doc.image('a.png', {
 });
 doc.moveDown(0.5);
 doc.font('Times-Bold')
-    .text('Proces verbal de predare-primire în subgestiune ', { width: 410, align: 'center' });
+    .text('Proces verbal de predare-primire in subgestiune ', { width: 410, align: 'center' });
 doc.moveDown(0.5);
 doc.font('Times-Italic')
     .text('avand ca obiect folosinta mijloacelor fixe/obiectelor de inventar', { width: 410, align: 'center' });
@@ -56,41 +56,50 @@ doc.font('Times-Roman')
 doc.moveDown(0.5);
 doc.font('Times-Roman')
     .text(`${data_incheiat_gestionare}`);
-doc.moveDown(2);
-doc.font('Times-Roman').table(tableArray , {
-    hideHeader : true , 
-    columnSpacing: 10,
-    padding: 10,
-    columnsSize: [200, 220],
-    align: "center",
-     // {Function}
-    prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+doc.moveDown(1);
+doc.font('Times-Roman')
+    .table(tableArray, {
+        hideHeader: true,
+        columnSpacing: 10,
+        padding: 70,
+        columnsSize: [250, 270],
+        align: "center",
+        // {Function}
+        prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
 
-        const { x, y, width, height } = rectCell;
-        // first line 
-        
-        if (indexColumn === 0) {
+            const { x, y, width, height } = rectCell;
+            // first line 
+
+            if (indexColumn === 0) {
+                doc
+                    .lineWidth(.5)
+                    .moveTo(x, y)
+                    .lineTo(x, y + height)
+                    .stroke();
+            }
+
             doc
                 .lineWidth(.5)
-                .moveTo(x , y )
-                .lineTo(x, y + height )
+                .moveTo(x + width, y)
+                .lineTo(x + width, y + height)
                 .stroke();
-        }
-
-        doc
-            .lineWidth(.5)
-            .moveTo(x + width, y)
-            .lineTo(x + width, y + height)
-            .stroke();
-        doc
-            .lineWidth(.5)
-            .moveTo(x  , y)
-            .lineTo(x + width , y )
-            .stroke();
+            doc
+                .lineWidth(.5)
+                .moveTo(x, y)
+                .lineTo(x + width, y)
+                .stroke();
 
 
-        doc.fontSize(10).fillColor('#292929');
+            doc.fontSize(10).fillColor('#292929');
 
-    }, // {Function}
-});
+        }, // {Function}
+    });
+doc.font('Times-Italic')
+    .text('Nota : ');
+doc.font('Times-Italic')
+    .text(`-     ${nota_1}`);
+doc.font('Times-Italic')
+    .text(`-     ${nota_2}`);
+doc.font('Times-Italic')
+    .text(`-     ${nota_3}`);
 doc.end();
