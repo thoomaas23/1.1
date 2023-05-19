@@ -13,7 +13,7 @@ let year = date.getFullYear();
 let currentDate;
 if (month >= 10) { currentDate = `${day}.${month}.${year}`; }
 else { currentDate = `${day}.0${month}.${year}`; }
-const data_incheiat_gestionare = `incheiat astazi ${currentDate}.`;
+const data_incheiat_gestionare = `Incheiat astazi ${currentDate}.`;
 const nota_1 = 'Primitorul are obligatia sa asigure paza si depozitarea in bune conditii a bunurilor primite in subgestiune;';
 const nota_2 = 'Primitorul are obligatia sa anunte gestionarul in cazul constatarii aparitiei defectiunilor, sau in cazul pierderii sau furtului, in maxim 24 de ore de la constatarea incidentului;';
 const nota_3 = 'Primitorul are obligatia de a pune la dispozitia proprietarului/gestinarului bunurile aflate in subgestiune la orice solicitare a acestuia invederea verificarii starii tehnice sau a inventarierii.';
@@ -25,7 +25,7 @@ doc.pipe(fs.createWriteStream('output.pdf'));
 
 const tableArray = {
 
-    headers: ["Predator", "Primitor"],
+    headers: ["Semnatura1","Semnatura2"],
     rows: [
         ["Predator", "Primitor"],
         [`${nume_predator}`, `${nume_primire}`,],
@@ -63,12 +63,12 @@ doc.font('Times-Roman')
         columnSpacing: 10,
         padding: 70,
         columnsSize: [250, 270],
-        align: "center",
         // {Function}
+        
         prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
 
             const { x, y, width, height } = rectCell;
-            // first line 
+            
 
             if (indexColumn === 0) {
                 doc
@@ -93,6 +93,7 @@ doc.font('Times-Roman')
             doc.fontSize(10).fillColor('#292929');
 
         }, // {Function}
+        
     });
 doc.font('Times-Italic')
     .text('Nota : ');
